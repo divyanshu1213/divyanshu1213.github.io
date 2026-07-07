@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://divyanshu1213.github.io/sitemap.xml
