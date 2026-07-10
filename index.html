@@ -32,6 +32,27 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
 
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Divyanshu Raj",
+    "url": "https://divyanshu1213.github.io/",
+    "jobTitle": "Computer Science Engineer",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "VIT-AP University"
+    },
+    "email": "mailto:rajdivyanshu1213@gmail.com",
+    "sameAs": [
+      "https://github.com/divyanshu1213",
+      "https://linkedin.com/in/divyanshu-raj-0a2498275"
+    ],
+    "knowsAbout": ["Deep Learning", "Python", "TensorFlow", "Generative AI", "Object Detection", "Full-Stack Development"]
+  }
+  </script>
+
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNMGC8HTRE"></script>
   <script>
@@ -131,6 +152,53 @@
       text-decoration: none; transition: all 0.2s;
     }
     .nav-resume:hover { background: var(--cyan); color: var(--bg); }
+
+    /* ── MOBILE NAV TOGGLE ── */
+    .nav-toggle {
+      display: none; width: 40px; height: 40px; border-radius: 6px;
+      border: 1px solid var(--border); background: transparent;
+      align-items: center; justify-content: center; cursor: pointer;
+      z-index: 220;
+    }
+    .nav-toggle-bars { position: relative; width: 18px; height: 12px; }
+    .nav-toggle-bars span {
+      position: absolute; left: 0; width: 100%; height: 2px; background: var(--text);
+      border-radius: 2px; transition: transform 0.25s ease, opacity 0.2s ease, top 0.25s ease;
+    }
+    .nav-toggle-bars span:nth-child(1) { top: 0; }
+    .nav-toggle-bars span:nth-child(2) { top: 5px; }
+    .nav-toggle-bars span:nth-child(3) { top: 10px; }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(1) { top: 5px; transform: rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(3) { top: 5px; transform: rotate(-45deg); }
+
+    .mobile-nav-overlay {
+      position: fixed; inset: 0; z-index: 210;
+      background: rgba(2,6,15,0.7); backdrop-filter: blur(4px);
+      opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    }
+    .mobile-nav-overlay.open { opacity: 1; pointer-events: auto; }
+    .mobile-nav-panel {
+      position: fixed; top: 0; right: 0; bottom: 0; z-index: 215;
+      width: min(78vw, 320px);
+      background: var(--card); border-left: 1px solid var(--border);
+      padding: 100px 32px 32px;
+      display: flex; flex-direction: column; gap: 4px;
+      transform: translateX(100%); transition: transform 0.3s ease;
+      box-shadow: -24px 0 64px rgba(0,0,0,0.4);
+    }
+    .mobile-nav-overlay.open .mobile-nav-panel { transform: translateX(0); }
+    .mobile-nav-panel a {
+      color: var(--text); text-decoration: none; font-family: var(--display);
+      font-weight: 700; font-size: 1.3rem; padding: 14px 0;
+      border-bottom: 1px solid var(--border); transition: color 0.2s;
+    }
+    .mobile-nav-panel a:hover { color: var(--cyan); }
+    .mobile-nav-panel .nav-resume {
+      margin-top: 24px; text-align: center; font-family: var(--mono);
+      font-size: 0.85rem;
+    }
+    @media (min-width: 901px) { .mobile-nav-overlay, .mobile-nav-panel { display: none; } }
 
     /* ── HERO ── */
     #hero {
@@ -329,8 +397,38 @@
     .live-badge { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 0.62rem; color: #22C55E; border: 1px solid rgba(34,197,94,0.3); background: rgba(34,197,94,0.08); padding: 2px 8px; border-radius: 3px; margin-left: 8px; }
     .live-dot { width: 5px; height: 5px; background: #22C55E; border-radius: 50%; animation: pulse 1.5s infinite; }
 
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--bg2); }
+    .timeline { position: relative; max-width: 780px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 1px;
+      background: linear-gradient(180deg, var(--blue), var(--border) 90%);
+    }
+    .timeline-item { position: relative; padding-left: 40px; margin-bottom: 40px; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: 0; top: 4px; width: 19px; height: 19px; border-radius: 50%;
+      background: var(--bg2); border: 2px solid var(--blue);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .timeline-dot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); }
+    .timeline-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 24px 28px; transition: border-color 0.2s, transform 0.2s;
+    }
+    .timeline-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+    .timeline-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+    .timeline-role { font-family: var(--display); font-weight: 700; font-size: 1.1rem; color: var(--text); }
+    .timeline-date { font-family: var(--mono); font-size: 0.75rem; color: var(--cyan); white-space: nowrap; }
+    .timeline-org { font-size: 0.85rem; color: var(--muted); font-family: var(--mono); margin-bottom: 14px; }
+    .timeline-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .timeline-list li { font-size: 0.9rem; color: var(--muted); line-height: 1.7; padding-left: 18px; position: relative; }
+    .timeline-list li::before { content: '▸'; position: absolute; left: 0; color: var(--blue); }
+    .timeline-list li strong { color: var(--text); font-weight: 600; }
+    .timeline-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
     /* ── SKILLS ── */
-    #skills { background: var(--bg2); }
+    #skills { background: var(--bg); }
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
     .skill-group { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; transition: border-color 0.2s; }
     .skill-group:hover { border-color: var(--blue); }
@@ -341,7 +439,7 @@
     .pill:hover { border-color: var(--blue); color: var(--cyan); background: rgba(37,99,235,0.08); transform: translateY(-2px); }
 
     /* ── CERTIFICATIONS ── */
-    #certifications { background: var(--bg); }
+    #certifications { background: var(--bg2); }
     .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
     .cert-card {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
@@ -358,7 +456,7 @@
     .cert-card:hover .cert-arrow { opacity: 1; transform: translateX(4px); }
 
     /* ── CONTACT ── */
-    #contact { background: var(--bg2); text-align: center; }
+    #contact { background: var(--bg); text-align: center; }
     .contact-inner { max-width: 600px; margin: 0 auto; }
     .contact-desc { color: var(--muted); font-size: 1rem; line-height: 1.85; margin-bottom: 40px; }
     .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 40px; }
@@ -439,6 +537,8 @@
       .hero-right { display: none; }
       .about-grid { grid-template-columns: 1fr; }
       nav .nav-links { display: none; }
+      nav .nav-resume { display: none; }
+      .nav-toggle { display: flex; }
       .contact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
     }
@@ -461,12 +561,29 @@
   <ul class="nav-links">
     <li><a href="#about">about</a></li>
     <li><a href="#projects">projects</a></li>
+    <li><a href="#experience">experience</a></li>
     <li><a href="#skills">skills</a></li>
     <li><a href="#certifications">certs</a></li>
     <li><a href="#contact">contact</a></li>
   </ul>
   <a href="Divyanshu_Resume.pdf" class="nav-resume js-resume-preview">resume.pdf ↓</a>
+  <button type="button" class="nav-toggle" id="nav-toggle" aria-expanded="false" aria-controls="mobile-nav-panel" aria-label="Open menu">
+    <span class="nav-toggle-bars"><span></span><span></span><span></span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav-overlay" id="mobile-nav-overlay">
+  <div class="mobile-nav-panel" id="mobile-nav-panel">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#skills">Skills</a>
+    <a href="#certifications">Certs</a>
+    <a href="#contact">Contact</a>
+    <a href="Divyanshu_Resume.pdf" class="nav-resume js-resume-preview">resume.pdf ↓</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <section id="hero">
@@ -593,7 +710,7 @@
 
     <div class="project-card fade">
       <div class="project-num">PROJECT_01</div>
-      <div class="project-icon">🤖</div>
+      <div class="project-icon" aria-hidden="true">🤖</div>
       <h3 class="project-name">AI Resume Analyzer <span class="live-badge"><span class="live-dot"></span>LIVE</span></h3>
       <p class="project-desc">Full-stack AI web app that analyzes resumes using Google Gemini AI. Features ATS scoring, dark/light theme toggle, PDF/Word upload, animated progress, and downloadable reports. Deployed on Streamlit Cloud.</p>
       <div class="project-tags">
@@ -607,7 +724,7 @@
 
     <div class="project-card fade">
       <div class="project-num">PROJECT_02</div>
-      <div class="project-icon">🎯</div>
+      <div class="project-icon" aria-hidden="true">🎯</div>
       <h3 class="project-name">Military Aircraft Detection</h3>
       <p class="project-desc">Custom CNN built with TensorFlow to detect and classify military aircraft in images. Trained on a curated dataset with advanced augmentation techniques, achieving 87% classification accuracy with bounding box localization.</p>
       <div class="project-tags">
@@ -620,7 +737,7 @@
 
     <div class="project-card fade">
       <div class="project-num">PROJECT_03</div>
-      <div class="project-icon">🚗</div>
+      <div class="project-icon" aria-hidden="true">🚗</div>
       <h3 class="project-name">Object-Avoiding Smart Car</h3>
       <p class="project-desc">Autonomous prototype vehicle using Raspberry Pi Pico and MicroPython. Integrates ultrasonic distance sensor and LDR light sensor for real-time environment-aware obstacle detection and motor control.</p>
       <div class="project-tags">
@@ -631,26 +748,41 @@
       </div>
     </div>
 
-    <div class="project-card fade">
-      <div class="project-num">PROJECT_04</div>
-      <div class="project-icon">🔬</div>
-      <h3 class="project-name">YOLO Object Detection Research</h3>
-      <p class="project-desc">Research internship at FIST-TBI, IIT Patna under faculty supervision. Worked on YOLO-architecture object detection — dataset preparation, model training, hyperparameter tuning, and evaluation in a real R&D environment.</p>
-      <div class="project-tags">
-        <span class="tag">YOLO</span><span class="tag">Deep Learning</span><span class="tag">Python</span><span class="tag">Research</span><span class="tag">IIT Patna</span>
-      </div>
-      <div class="project-links">
-        <a href="https://github.com/divyanshu1213" target="_blank" class="proj-link github">GitHub ↗</a>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="fade">
+    <p class="section-label">// 03 — experience</p>
+    <h2 class="section-title">Work <span>Experience</span></h2>
+  </div>
+  <div class="timeline fade">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-card">
+        <div class="timeline-head">
+          <span class="timeline-role">Research Intern</span>
+          <span class="timeline-date">Jun 2024 – Jul 2024</span>
+        </div>
+        <div class="timeline-org">FIST-TBI, IIT Patna · On-site</div>
+        <ul class="timeline-list">
+          <li>Collaborated with a faculty researcher on <strong>object detection using the YOLO architecture</strong>, contributing to an active academic R&D project.</li>
+          <li>Handled the <strong>full ML pipeline</strong> — dataset preparation, model training, hyperparameter tuning, and evaluation.</li>
+          <li>Gained hands-on exposure to research workflows and experiment tracking inside a top-tier institution.</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="tag">YOLO</span><span class="tag">Deep Learning</span><span class="tag">Python</span><span class="tag">Research</span>
+        </div>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- SKILLS -->
 <section id="skills">
   <div class="fade">
-    <p class="section-label">// 03 — skills</p>
+    <p class="section-label">// 04 — skills</p>
     <h2 class="section-title">Skills & <span>Technologies</span></h2>
   </div>
   <div class="skills-grid fade">
@@ -684,12 +816,12 @@
 <!-- CERTIFICATIONS -->
 <section id="certifications">
   <div class="fade">
-    <p class="section-label">// 04 — credentials</p>
+    <p class="section-label">// 05 — credentials</p>
     <h2 class="section-title">Certifi<span>cations</span></h2>
   </div>
   <div class="certs-grid fade">
     <a href="https://drive.google.com/file/d/1YbVTM10v21P3-vDu2q7Iu6QcPTnlcNBF/view?usp=drive_link" target="_blank" class="cert-card">
-      <div class="cert-icon">☁️</div>
+      <div class="cert-icon" aria-hidden="true">☁️</div>
       <div>
         <div class="cert-name">Oracle Generative AI Professional</div>
         <div class="cert-org">Oracle</div>
@@ -697,7 +829,7 @@
       <div class="cert-arrow">↗</div>
     </a>
     <a href="https://graphacademy.neo4j.com/c/caad2308-104f-40d8-b896-b905ad7fd082/" target="_blank" class="cert-card">
-      <div class="cert-icon">🕸️</div>
+      <div class="cert-icon" aria-hidden="true">🕸️</div>
       <div>
         <div class="cert-name">Neo4j Certified Professional</div>
         <div class="cert-org">Neo4j</div>
@@ -705,7 +837,7 @@
       <div class="cert-arrow">↗</div>
     </a>
     <a href="https://drive.google.com/file/d/1ACuKiuBwUY2mL1qb8QhSNi_2fR0WXGP6/view?usp=drive_link" target="_blank" class="cert-card">
-      <div class="cert-icon">🍃</div>
+      <div class="cert-icon" aria-hidden="true">🍃</div>
       <div>
         <div class="cert-name">MongoDB Certified DBA</div>
         <div class="cert-org">MongoDB</div>
@@ -713,7 +845,7 @@
       <div class="cert-arrow">↗</div>
     </a>
     <a href="https://drive.google.com/file/d/11Lcj_Za9ZPgQertGhJ9AwNbGkGwZX_BU/view?usp=sharing" target="_blank" class="cert-card">
-      <div class="cert-icon">☕</div>
+      <div class="cert-icon" aria-hidden="true">☕</div>
       <div>
         <div class="cert-name">Java 11 Essentials</div>
         <div class="cert-org">Infosys Springboard</div>
@@ -721,7 +853,7 @@
       <div class="cert-arrow">↗</div>
     </a>
     <a href="https://drive.google.com/file/d/1QZHJFVXvUAeS2V8qUUWqlMKp7jPxfgqL/view?usp=drive_link" target="_blank" class="cert-card">
-      <div class="cert-icon">🔬</div>
+      <div class="cert-icon" aria-hidden="true">🔬</div>
       <div>
         <div class="cert-name">Research Internship Certificate</div>
         <div class="cert-org">FIST-TBI, IIT Patna</div>
@@ -729,7 +861,7 @@
       <div class="cert-arrow">↗</div>
     </a>
     <div class="cert-card" style="border-style:dashed;opacity:0.5;">
-      <div class="cert-icon">🔷</div>
+      <div class="cert-icon" aria-hidden="true">🔷</div>
       <div>
         <div class="cert-name">Microsoft Fabric Analytics DP-600</div>
         <div class="cert-org">Microsoft — In Progress</div>
@@ -741,21 +873,21 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner fade">
-    <p class="section-label">// 05 — contact</p>
+    <p class="section-label">// 06 — contact</p>
     <h2 class="section-title">Let's Build <span>Together</span></h2>
     <p class="contact-desc">I'm actively looking for SDE and ML Engineer opportunities. Whether you have a role, a project, or just want to talk tech — my inbox is always open.</p>
     <div class="contact-grid">
       <a href="mailto:rajdivyanshu1213@gmail.com" class="contact-card">
-        <span class="icon">✉️</span> rajdivyanshu1213@gmail.com
+        <span class="icon" aria-hidden="true">✉️</span> rajdivyanshu1213@gmail.com
       </a>
       <a href="https://linkedin.com/in/divyanshu-raj-0a2498275" target="_blank" class="contact-card">
-        <span class="icon">💼</span> LinkedIn Profile
+        <span class="icon" aria-hidden="true">💼</span> LinkedIn Profile
       </a>
       <a href="https://github.com/divyanshu1213" target="_blank" class="contact-card">
-        <span class="icon">🐙</span> GitHub Profile
+        <span class="icon" aria-hidden="true">🐙</span> GitHub Profile
       </a>
       <a href="tel:+919122610140" class="contact-card">
-        <span class="icon">📱</span> +91 91226 10140
+        <span class="icon" aria-hidden="true">📱</span> +91 91226 10140
       </a>
     </div>
     <a href="Divyanshu_Resume.pdf" class="btn-download js-resume-preview" style="display:inline-flex;margin:0 auto;">
@@ -882,6 +1014,34 @@
     iframe.addEventListener('error', () => {
       iframe.style.display = 'none';
       fallback.style.display = 'flex';
+    });
+  })();
+
+  // Mobile nav toggle
+  (function () {
+    const toggle = document.getElementById('nav-toggle');
+    const overlay = document.getElementById('mobile-nav-overlay');
+    if (!toggle || !overlay) return;
+
+    function openMenu() {
+      overlay.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      overlay.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', () => {
+      overlay.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeMenu(); });
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeMenu();
     });
   })();
 
