@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=1200"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Divyanshu Raj — CS Engineer & Deep Learning Developer</title>
 
   <!-- SEO -->
@@ -248,11 +248,12 @@
     .status-dot { width: 6px; height: 6px; background: #22C55E; border-radius: 50%; animation: pulse 1.5s infinite; }
     .hero-name {
       font-family: var(--display);
-      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-size: clamp(2rem, 10vw, 5.5rem);
       font-weight: 800;
       line-height: 0.95;
       letter-spacing: -0.03em;
       margin-bottom: 24px;
+      word-break: break-word;
     }
     .hero-name .line1 { display: block; color: var(--text); }
     .hero-name .line2 {
@@ -536,8 +537,8 @@
     .fade.show { opacity: 1; transform: translateY(0); }
 
     @media(max-width:900px) {
-      #hero { grid-template-columns: 1fr; padding-top: 100px; }
-      .hero-right { display: none; }
+      #hero { grid-template-columns: 1fr; padding-top: 100px; gap: 40px; }
+      .hero-right { display: block; max-width: 100%; overflow: hidden; }
       .about-grid { grid-template-columns: 1fr; }
       nav .nav-links { display: none; }
       nav .nav-resume { display: none; }
