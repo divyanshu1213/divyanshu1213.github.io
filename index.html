@@ -6,7 +6,7 @@
   <title>Divyanshu Raj — CS Engineer & Deep Learning Developer</title>
 
   <!-- SEO -->
-  <meta name="description" content="Divyanshu Raj — Computer Science & Engineering student at VIT-AP, Deep Learning & Full-Stack developer. Research intern at IIT Patna (YOLO object detection). Building AI products with Python, TensorFlow, and Generative AI."/>
+  <meta name="description" content="Divyanshu Raj — Computer Science & Engineering graduate from VIT-AP, Deep Learning & Full-Stack developer. Research intern at IIT Patna (YOLO object detection). Building AI products with Python, TensorFlow, and Generative AI."/>
   <meta name="keywords" content="Divyanshu Raj, Deep Learning Engineer, ML Engineer, SDE, Python Developer, YOLO, TensorFlow, IIT Patna, VIT-AP, Generative AI, Portfolio"/>
   <meta name="author" content="Divyanshu Raj"/>
   <meta name="robots" content="index, follow"/>
@@ -15,14 +15,14 @@
   <!-- Open Graph / LinkedIn / Facebook -->
   <meta property="og:type" content="website"/>
   <meta property="og:title" content="Divyanshu Raj — CS Engineer & Deep Learning Developer"/>
-  <meta property="og:description" content="Computer Science & Engineering student building AI products — Deep Learning, YOLO, Generative AI, and full-stack development. Research intern at IIT Patna."/>
+  <meta property="og:description" content="Computer Science & Engineering graduate building AI products — Deep Learning, YOLO, Generative AI, and full-stack development. Research intern at IIT Patna."/>
   <meta property="og:url" content="https://divyanshu1213.github.io/"/>
   <meta property="og:image" content="https://divyanshu1213.github.io/assets/og-image.png"/>
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Divyanshu Raj — CS Engineer & Deep Learning Developer"/>
-  <meta name="twitter:description" content="Computer Science & Engineering student building AI products — Deep Learning, YOLO, Generative AI, and full-stack development."/>
+  <meta name="twitter:description" content="Computer Science & Engineering graduate building AI products — Deep Learning, YOLO, Generative AI, and full-stack development."/>
   <meta name="twitter:image" content="https://divyanshu1213.github.io/assets/og-image.png"/>
 
   <!-- Favicon -->
@@ -30,7 +30,7 @@
   <link rel="alternate icon" href="favicon.svg"/>
   <link rel="apple-touch-icon" href="favicon.svg"/>
 
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -54,12 +54,20 @@
   </script>
 
   <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GNMGC8HTRE"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-GNMGC8HTRE');
+    (function () {
+      var p = ['G-', 'GNMGC8HTRE'];
+      var id = p.join('');
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', id);
+    })();
   </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -74,7 +82,7 @@
       --muted:   #64748B;
       --border:  #1E293B;
       --card:    #0F172A;
-      --display: 'Syne', sans-serif;
+      --display: 'Space Grotesk', sans-serif;
       --body:    'Inter', sans-serif;
       --mono:    'JetBrains Mono', monospace;
     }
@@ -202,11 +210,12 @@
 
     /* ── HERO ── */
     #hero {
-      min-height: 100vh; display: grid;
+      min-height: 100vh; min-height: 100svh; min-height: 100dvh;
+      display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center; gap: 60px;
       padding: 120px 6% 80px;
-      position: relative; overflow: hidden;
+      position: relative; overflow-x: hidden;
     }
     
     /* ADDED: Matrix Background */
@@ -249,7 +258,7 @@
     .hero-name {
       font-family: var(--display);
       font-size: clamp(3rem, 7vw, 5.5rem);
-      font-weight: 800;
+      font-weight: 700;
       line-height: 0.95;
       letter-spacing: -0.03em;
       margin-bottom: 24px;
@@ -352,7 +361,7 @@
     /* ── SECTIONS ── */
     section { padding: 100px 6%; }
     .section-label { font-family: var(--mono); font-size: 0.72rem; color: var(--blue); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px; }
-    .section-title { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 56px; }
+    .section-title { font-family: var(--display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 56px; }
     .section-title span { background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
     /* ── ABOUT ── */
@@ -366,7 +375,7 @@
       padding: 24px 20px; transition: all 0.3s; cursor: default;
     }
     .stat-card:hover { border-color: var(--blue); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(37,99,235,0.15); }
-    .stat-val { font-family: var(--display); font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; margin-bottom: 6px; }
+    .stat-val { font-family: var(--display); font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; margin-bottom: 6px; }
     .stat-lbl { font-size: 0.78rem; color: var(--muted); font-family: var(--mono); }
 
     /* ── TICKER ── */
@@ -470,7 +479,7 @@
     #contact { background: var(--bg); text-align: center; }
     .contact-inner { max-width: 600px; margin: 0 auto; }
     .contact-desc { color: var(--muted); font-size: 1rem; line-height: 1.85; margin-bottom: 40px; }
-    .contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 40px; }
+    .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 40px; }
     .contact-card {
       background: var(--card); border: 1px solid var(--border); border-radius: 10px;
       padding: 18px; text-decoration: none; color: var(--muted);
@@ -478,7 +487,8 @@
       display: flex; align-items: center; gap: 10px;
     }
     .contact-card:hover { border-color: var(--blue); color: var(--cyan); transform: translateY(-2px); }
-    .contact-card .icon { font-size: 1.2rem; }
+    .contact-card .icon { flex-shrink: 0; display: flex; align-items: center; }
+    .contact-card .label { min-width: 0; overflow-wrap: anywhere; text-align: left; }
 
     /* ── FOOTER ── */
     footer {
@@ -537,13 +547,25 @@
 
     @media(max-width:900px) {
       #hero { grid-template-columns: 1fr; padding-top: 100px; }
-      .hero-right { display: none; }
+      .hero-right { margin-top: 8px; }
       .about-grid { grid-template-columns: 1fr; }
       nav .nav-links { display: none; }
       nav .nav-resume { display: none; }
       .nav-toggle { display: flex; }
       .contact-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media(max-width:600px) {
+      .code-window { transform: none !important; }
+      .code-body { padding: 16px; font-size: 0.74rem; overflow-x: auto; }
+      .code-line { white-space: nowrap; }
+      .terminal-body { padding: 12px; font-size: 0.72rem; max-height: 120px; }
+    }
+    @media(max-width:480px) {
+      #hero { padding: 90px 6% 50px; }
+      .hero-name { margin-bottom: 18px; }
+      .hero-desc { margin-bottom: 28px; }
+      .hero-btns { margin-bottom: 32px; }
     }
     @media(prefers-reduced-motion:reduce) { .ticker { animation: none; } }
   </style>
@@ -557,7 +579,7 @@
 <nav>
   <div class="logo">
     <div class="logo-dot"></div>
-    <span style="font-weight:700;">divyanshu</span><span style="color:var(--blue);">.raj</span>
+    <span><span style="font-weight:700;">divyanshu</span><span style="color:var(--blue);">.raj</span></span>
   </div>
   <ul class="nav-links">
     <li><a href="#about">about</a></li>
@@ -603,7 +625,7 @@
       <span class="line2" id="hero-gradient-name">Raj<span class="cursor-blink"></span></span>
     </h1>
     <p class="hero-desc">
-      Final-year <strong>CSE student at VIT-AP</strong> and <strong>IIT Patna Research Intern</strong>.
+      <strong>CSE Graduate from VIT-AP</strong> and <strong>IIT Patna Research Intern</strong>.
       I build intelligent systems — from object detection models to deployed AI web apps.
       Passionate about <strong>Deep Learning, GenAI</strong>, and turning ideas into real products.
     </p>
@@ -613,9 +635,15 @@
       <a href="Divyanshu_Resume.pdf" class="btn-download js-resume-preview">⬇ Resume</a>
     </div>
     <div class="hero-socials">
-      <a href="https://github.com/divyanshu1213" target="_blank" class="social-link">GH</a>
-      <a href="https://linkedin.com/in/divyanshu-raj-0a2498275" target="_blank" class="social-link">LI</a>
-      <a href="mailto:rajdivyanshu1213@gmail.com" class="social-link">@</a>
+      <a href="https://github.com/divyanshu1213" target="_blank" class="social-link" aria-label="GitHub" title="GitHub">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg>
+      </a>
+      <a href="https://linkedin.com/in/divyanshu-raj-0a2498275" target="_blank" class="social-link" aria-label="LinkedIn" title="LinkedIn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+      </a>
+      <a href="mailto:rajdivyanshu1213@gmail.com" class="social-link" aria-label="Email" title="Email">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 7 9-7"/></svg>
+      </a>
     </div>
   </div>
 
@@ -681,7 +709,7 @@
   </div>
   <div class="about-grid fade">
     <div class="about-text">
-      <p>I'm a <strong>Computer Science & Engineering student at VIT-AP University</strong> with a strong foundation in Deep Learning, Python, and software development. Driven by curiosity to understand how intelligent systems work — and a desire to build things that actually matter.</p>
+      <p>I'm a <strong>Computer Science & Engineering graduate from VIT-AP University</strong> with a strong foundation in Deep Learning, Python, and software development. Driven by curiosity to understand how intelligent systems work — and a desire to build things that actually matter.</p>
       <p>During my <strong>research internship at IIT Patna</strong>, I worked hands-on with YOLO-based object detection — handling everything from dataset preparation to model training and evaluation inside a real R&D environment at one of India's top institutions.</p>
       <p>I recently built and deployed an <strong>AI Resume Analyzer</strong> using Google Gemini API — a full-stack AI product live on the web. Currently exploring <strong>Microsoft Fabric (DP-600)</strong>, cloud technologies, and the MERN stack.</p>
     </div>
@@ -696,7 +724,7 @@
       </div>
       <div class="stat-card">
         <div class="stat-val">3+</div>
-        <div class="stat-lbl">// Live Projects</div>
+        <div class="stat-lbl">// Projects Shipped</div>
       </div>
       <div class="stat-card">
         <div class="stat-val">5+</div>
@@ -709,8 +737,8 @@
 <!-- SKILLS TICKER -->
 <div class="ticker-wrap">
   <div class="ticker">
-    <div class="ticker-item"><span>✦</span> Python <span>✦</span> Java <span>✦</span> TensorFlow <span>✦</span> Deep Learning <span>✦</span> YOLO <span>✦</span> OpenCV <span>✦</span> Streamlit <span>✦</span> Google Gemini API <span>✦</span> Microsoft Azure <span>✦</span> MongoDB <span>✦</span> Neo4j <span>✦</span> Git & GitHub <span>✦</span> Tableau <span>✦</span> MicroPython <span>✦</span> JavaScript <span>✦</span> HTML & CSS <span>✦</span> MySQL <span>✦</span> AWS <span>✦</span> Figma <span>✦</span></div>
-    <div class="ticker-item"><span>✦</span> Python <span>✦</span> Java <span>✦</span> TensorFlow <span>✦</span> Deep Learning <span>✦</span> YOLO <span>✦</span> OpenCV <span>✦</span> Streamlit <span>✦</span> Google Gemini API <span>✦</span> Microsoft Azure <span>✦</span> MongoDB <span>✦</span> Neo4j <span>✦</span> Git & GitHub <span>✦</span> Tableau <span>✦</span> MicroPython <span>✦</span> JavaScript <span>✦</span> HTML & CSS <span>✦</span> MySQL <span>✦</span> AWS <span>✦</span> Figma <span>✦</span></div>
+    <div class="ticker-item"><span>✦</span> Python <span>✦</span> Java <span>✦</span> TensorFlow <span>✦</span> Deep Learning <span>✦</span> YOLO <span>✦</span> OpenCV <span>✦</span> Streamlit <span>✦</span> Microsoft Azure <span>✦</span> MongoDB <span>✦</span> Neo4j <span>✦</span> Git & GitHub <span>✦</span> Tableau <span>✦</span> MicroPython <span>✦</span> JavaScript <span>✦</span> HTML & CSS <span>✦</span> MySQL <span>✦</span> AWS <span>✦</span> Figma <span>✦</span></div>
+    <div class="ticker-item"><span>✦</span> Python <span>✦</span> Java <span>✦</span> TensorFlow <span>✦</span> Deep Learning <span>✦</span> YOLO <span>✦</span> OpenCV <span>✦</span> Streamlit <span>✦</span> Microsoft Azure <span>✦</span> MongoDB <span>✦</span> Neo4j <span>✦</span> Git & GitHub <span>✦</span> Tableau <span>✦</span> MicroPython <span>✦</span> JavaScript <span>✦</span> HTML & CSS <span>✦</span> MySQL <span>✦</span> AWS <span>✦</span> Figma <span>✦</span></div>
   </div>
 </div>
 
@@ -728,7 +756,7 @@
       <h3 class="project-name">AI Resume Analyzer <span class="live-badge"><span class="live-dot"></span>LIVE</span></h3>
       <p class="project-desc">Full-stack AI web app that analyzes resumes using Google Gemini AI. Features ATS scoring, dark/light theme toggle, PDF/Word upload, animated progress, and downloadable reports. Deployed on Streamlit Cloud.</p>
       <div class="project-tags">
-        <span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">Gemini AI</span><span class="tag">PyPDF2</span><span class="tag">GenAI</span>
+        <span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">Gemini AI</span><span class="tag">PyPDF2</span><span class="tag">ATS Scoring</span>
       </div>
       <div class="project-links">
         <a href="https://github.com/divyanshu1213/ai-resume-analyzer" target="_blank" class="proj-link github">GitHub ↗</a>
@@ -788,6 +816,9 @@
         <div class="timeline-tags">
           <span class="tag">YOLO</span><span class="tag">Deep Learning</span><span class="tag">Python</span><span class="tag">Research</span>
         </div>
+        <a href="https://drive.google.com/file/d/1QZHJFVXvUAeS2V8qUUWqlMKp7jPxfgqL/view?usp=drive_link" target="_blank" style="display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-family:var(--mono); font-size:0.78rem; color:var(--cyan); text-decoration:none;">
+          View Internship Certificate ↗
+        </a>
       </div>
     </div>
   </div>
@@ -809,7 +840,7 @@
     <div class="skill-group">
       <div class="skill-group-title">AI / ML</div>
       <div class="skills-pills">
-        <span class="pill">TensorFlow</span><span class="pill">OpenCV</span><span class="pill">YOLO</span><span class="pill">CNN</span><span class="pill">Generative AI</span><span class="pill">Gemini API</span>
+        <span class="pill">TensorFlow</span><span class="pill">OpenCV</span><span class="pill">YOLO</span><span class="pill">CNN</span><span class="pill">Generative AI</span>
       </div>
     </div>
     <div class="skill-group">
@@ -866,18 +897,10 @@
       </div>
       <div class="cert-arrow">↗</div>
     </a>
-    <a href="https://drive.google.com/file/d/1QZHJFVXvUAeS2V8qUUWqlMKp7jPxfgqL/view?usp=drive_link" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">🔬</div>
-      <div>
-        <div class="cert-name">Research Internship Certificate</div>
-        <div class="cert-org">FIST-TBI, IIT Patna</div>
-      </div>
-      <div class="cert-arrow">↗</div>
-    </a>
     <a href="https://learn.microsoft.com/api/credentials/share/en-gb/DivyanshuRaj-7619/7FC1ED6F472F6C5E?sharingId=7C3BF7180C544ED1" target="_blank" class="cert-card">
       <div class="cert-icon" aria-hidden="true">🔷</div>
       <div>
-        <div class="cert-name">Microsoft Certified: Fabric Analytics Engineer Associate(DP600)</div>
+        <div class="cert-name">Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</div>
         <div class="cert-org">Microsoft</div>
       </div>
       <div class="cert-arrow">↗</div>
@@ -893,16 +916,16 @@
     <p class="contact-desc">I'm actively looking for SDE and ML Engineer opportunities. Whether you have a role, a project, or just want to talk tech — my inbox is always open.</p>
     <div class="contact-grid">
       <a href="mailto:rajdivyanshu1213@gmail.com" class="contact-card">
-        <span class="icon" aria-hidden="true">✉️</span> rajdivyanshu1213@gmail.com
+        <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 7 9-7"/></svg></span>
+        <span class="label">rajdivyanshu1213@gmail.com</span>
       </a>
       <a href="https://linkedin.com/in/divyanshu-raj-0a2498275" target="_blank" class="contact-card">
-        <span class="icon" aria-hidden="true">💼</span> LinkedIn Profile
+        <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg></span>
+        <span class="label">LinkedIn Profile</span>
       </a>
       <a href="https://github.com/divyanshu1213" target="_blank" class="contact-card">
-        <span class="icon" aria-hidden="true">🐙</span> GitHub Profile
-      </a>
-      <a href="tel:+919122610140" class="contact-card">
-        <span class="icon" aria-hidden="true">📱</span> +91 91226 10140
+        <span class="icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61-.55-1.4-1.34-1.77-1.34-1.77-1.09-.75.08-.73.08-.73 1.21.08 1.85 1.24 1.85 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 12 .5Z"/></svg></span>
+        <span class="label">GitHub Profile</span>
       </a>
     </div>
     <a href="Divyanshu_Resume.pdf" class="btn-download js-resume-preview" style="display:inline-flex;margin:0 auto;">
