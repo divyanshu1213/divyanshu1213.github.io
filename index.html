@@ -136,6 +136,102 @@
       html { scroll-behavior: auto; }
     }
 
+    /* ── ASK DIVYANSHU AI ── */
+    #ai-fab {
+      position: fixed; bottom: 28px; left: 28px; z-index: 160;
+      display: flex; align-items: center; gap: 8px;
+      padding: 13px 20px; border-radius: 999px;
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); font-family: var(--mono); font-size: 0.82rem; font-weight: 500;
+      cursor: pointer; letter-spacing: 0.02em;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    #ai-fab:hover { border-color: var(--cyan); box-shadow: 0 8px 28px rgba(6,182,212,0.25); transform: translateY(-2px); }
+    #ai-fab .ai-fab-spark { color: var(--cyan); animation: pulse 2s infinite; }
+    #ai-fab.hide { opacity: 0; pointer-events: none; transform: translateY(12px) scale(0.9); }
+
+    #ai-panel {
+      position: fixed; bottom: 28px; left: 28px; z-index: 170;
+      width: min(380px, calc(100vw - 40px)); height: min(560px, calc(100vh - 100px));
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      display: flex; flex-direction: column; overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      opacity: 0; pointer-events: none; transform: translateY(16px) scale(0.97);
+      transform-origin: bottom left;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+    #ai-panel.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+
+    .ai-panel-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 18px; border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(124,58,237,0.08));
+      flex-shrink: 0;
+    }
+    .ai-panel-title {
+      font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.08em;
+      color: var(--text); display: flex; align-items: center; gap: 8px;
+    }
+    .ai-panel-title .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); animation: pulse 2s infinite; }
+    .ai-panel-close {
+      width: 28px; height: 28px; border-radius: 6px; cursor: pointer;
+      color: var(--muted); display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; transition: color 0.2s, background 0.2s;
+    }
+    .ai-panel-close:hover { color: var(--text); background: rgba(255,255,255,0.06); }
+
+    .ai-quick-row { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 16px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .ai-quick-btn {
+      font-family: var(--mono); font-size: 0.7rem; color: var(--cyan);
+      border: 1px solid rgba(6,182,212,0.3); background: rgba(6,182,212,0.06);
+      padding: 6px 10px; border-radius: 6px; cursor: pointer; transition: all 0.15s;
+    }
+    .ai-quick-btn:hover { background: rgba(6,182,212,0.14); border-color: var(--cyan); }
+
+    .ai-body {
+      flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .ai-msg { display: flex; gap: 8px; max-width: 100%; animation: aiIn 0.25s ease; }
+    @keyframes aiIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .ai-msg.user { justify-content: flex-end; }
+    .ai-bubble {
+      padding: 10px 13px; border-radius: 12px; font-size: 0.84rem; line-height: 1.55;
+      max-width: 85%; white-space: pre-wrap;
+    }
+    .ai-msg.bot .ai-bubble { background: var(--bg3); border: 1px solid var(--border); color: var(--text); border-bottom-left-radius: 4px; }
+    .ai-msg.user .ai-bubble { background: linear-gradient(135deg, var(--blue), var(--purple)); color: #fff; border-bottom-right-radius: 4px; }
+    .ai-typing { display: flex; gap: 4px; padding: 4px 2px; }
+    .ai-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: aiTyping 1s infinite ease-in-out; }
+    .ai-typing span:nth-child(2) { animation-delay: 0.15s; }
+    .ai-typing span:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes aiTyping { 0%,60%,100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+    .ai-input-row {
+      display: flex; align-items: center; gap: 8px; padding: 12px; border-top: 1px solid var(--border); flex-shrink: 0;
+    }
+    #ai-input {
+      flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+      padding: 10px 12px; color: var(--text); font-size: 0.84rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    #ai-input:focus { border-color: var(--cyan); }
+    #ai-send {
+      width: 38px; height: 38px; border-radius: 8px; flex-shrink: 0;
+      background: var(--cyan); color: var(--bg); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+    }
+    #ai-send:hover { transform: scale(1.05); }
+    #ai-send:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+    @media (max-width: 640px) {
+      #ai-fab { padding: 12px 16px; font-size: 0.78rem; bottom: 18px; left: 18px; }
+      #ai-panel { bottom: 0; left: 0; right: 0; width: 100%; height: 82vh; border-radius: 16px 16px 0 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #ai-fab, #ai-panel, .ai-msg, .ai-typing span { transition: none !important; animation: none !important; }
+    }
+
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -287,6 +383,8 @@
       transition: all 0.2s; box-shadow: 0 0 32px rgba(37,99,235,0.3);
     }
     .btn-primary:hover { background: #1D4ED8; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,99,235,0.5); }
+    .btn-primary .btn-arrow, .btn-secondary .btn-arrow { display: inline-block; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+    .btn-primary:hover .btn-arrow, .btn-secondary:hover .btn-arrow { transform: translateX(5px); }
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 8px;
       border: 1px solid var(--border); color: var(--text);
@@ -308,9 +406,32 @@
       width: 38px; height: 38px; border: 1px solid var(--border);
       border-radius: 6px; display: flex; align-items: center; justify-content: center;
       color: var(--muted); text-decoration: none; font-size: 0.8rem;
-      transition: all 0.2s; font-family: var(--mono);
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      font-family: var(--mono);
     }
-    .social-link:hover { border-color: var(--blue); color: var(--cyan); background: rgba(37,99,235,0.1); }
+    .social-link:hover { border-color: var(--blue); color: var(--cyan); background: rgba(37,99,235,0.1); transform: translateY(-3px) rotate(-6deg) scale(1.08); }
+
+    /* nav underline sweep */
+    .nav-links a { position: relative; }
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; bottom: -4px; width: 100%; height: 1px;
+      background: var(--cyan); transform: scaleX(0); transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    /* skill pill checkmark */
+    .pill { position: relative; padding-right: 12px; transition: all 0.25s; }
+    .pill::after { content: '✓'; display: inline-block; color: var(--cyan); opacity: 0; max-width: 0; overflow: hidden; transition: opacity 0.2s ease, max-width 0.25s ease, margin-left 0.25s ease; vertical-align: middle; }
+    .pill:hover::after { opacity: 1; max-width: 16px; margin-left: 6px; }
+
+    /* contact card arrow reveal */
+    .contact-card::after {
+      content: '→'; flex-shrink: 0; color: var(--cyan); font-family: var(--mono);
+      opacity: 0; max-width: 0; overflow: hidden; transition: opacity 0.2s, max-width 0.25s, margin-left 0.25s;
+    }
+    .contact-card:hover::after { opacity: 1; max-width: 20px; margin-left: 2px; }
+
 
     /* ── CODE BLOCK ── */
     /* ADDED: Jitter-free 3D Wrapper */
@@ -391,9 +512,15 @@
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
     .project-card {
       background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-      padding: 32px; transition: all 0.3s; position: relative; overflow: hidden;
+      padding: 28px; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
       cursor: default;
     }
+    .project-card::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(6,182,212,0.10), transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .project-card:hover::before { opacity: 1; }
     .project-card::after {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, transparent, var(--blue), var(--cyan), transparent);
@@ -401,37 +528,102 @@
     }
     .project-card:hover { border-color: rgba(37,99,235,0.4); transform: translateY(-6px); box-shadow: 0 20px 48px rgba(37,99,235,0.12); }
     .project-card:hover::after { opacity: 1; }
-    .project-num { font-family: var(--mono); font-size: 0.68rem; color: var(--blue); letter-spacing: 0.15em; margin-bottom: 16px; }
-    .project-icon { font-size: 2rem; margin-bottom: 16px; }
-    .project-name { font-family: var(--display); font-size: 1.2rem; font-weight: 700; margin-bottom: 12px; color: var(--text); }
-    .project-desc { font-size: 0.87rem; color: var(--muted); line-height: 1.75; margin-bottom: 20px; }
-    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
-    .tag { font-family: var(--mono); font-size: 0.68rem; color: var(--cyan); background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); padding: 3px 10px; border-radius: 3px; }
-    .project-links { display: flex; gap: 16px; }
-    .proj-link { font-size: 0.8rem; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all 0.2s; }
-    .proj-link.github { color: var(--muted); }
-    .proj-link.github:hover { color: var(--text); }
-    .proj-link.live { color: var(--cyan); }
-    .proj-link.live:hover { color: #fff; }
-    .proj-link:hover { gap: 8px; }
-    .live-badge { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 0.62rem; color: #22C55E; border: 1px solid rgba(34,197,94,0.3); background: rgba(34,197,94,0.08); padding: 2px 8px; border-radius: 3px; margin-left: 8px; }
+    .project-card > * { position: relative; z-index: 1; }
+    .project-num { font-family: var(--mono); font-size: 0.68rem; color: var(--blue); letter-spacing: 0.15em; margin-bottom: 14px; }
+    .project-name { font-family: var(--display); font-size: 1.2rem; font-weight: 700; margin-bottom: 16px; color: var(--text); display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+    /* mini product-demo visual */
+    .project-visual {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 10px;
+      padding: 14px 16px 16px; margin-bottom: 18px; transition: border-color 0.3s;
+    }
+    .project-card:hover .project-visual { border-color: rgba(6,182,212,0.3); }
+    .visual-head { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; }
+    .visual-head .vdot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+    .visual-head .vlabel { font-family: var(--mono); font-size: 0.64rem; color: var(--muted); letter-spacing: 0.06em; margin-left: 2px; }
+
+    /* resume ATS mock */
+    .ats-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+    .ats-row .ats-label { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; }
+    .ats-row .ats-num { font-family: var(--display); font-size: 1.6rem; font-weight: 700; color: var(--cyan); }
+    .ats-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; }
+    .ats-bar-fill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width 1.3s cubic-bezier(0.16,1,0.3,1); }
+
+    /* CNN metric bars */
+    .metric-row { display: grid; grid-template-columns: 78px 1fr 48px; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .metric-row:last-child { margin-bottom: 0; }
+    .metric-row .metric-name { font-family: var(--mono); font-size: 0.66rem; color: var(--muted); }
+    .metric-bar { height: 7px; border-radius: 999px; background: rgba(255,255,255,0.06); overflow: hidden; }
+    .metric-fill { height: 100%; width: 0%; border-radius: 999px; transition: width 1.3s cubic-bezier(0.16,1,0.3,1); }
+    .metric-fill.fill-primary { background: linear-gradient(90deg, var(--blue), var(--cyan)); }
+    .metric-fill.fill-secondary { background: var(--border); }
+    .metric-row .metric-num { font-family: var(--mono); font-size: 0.7rem; color: var(--text); text-align: right; }
+
+    /* car radar mock */
+    .radar-wrap { display: flex; align-items: center; gap: 18px; }
+    .radar { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
+    .radar-ring { position: absolute; inset: 0; border: 1px solid rgba(6,182,212,0.35); border-radius: 50%; }
+    .radar-ring.r2 { inset: 14px; }
+    .radar-sweep {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(from 0deg, rgba(6,182,212,0.5), transparent 35%);
+      animation: radarSpin 2.4s linear infinite;
+    }
+    .radar-core { position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; margin: -3px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+    @keyframes radarSpin { to { transform: rotate(360deg); } }
+    .radar-readout { font-family: var(--mono); font-size: 0.78rem; color: var(--text); }
+    .radar-readout .rd-num { color: var(--cyan); font-size: 1.3rem; font-weight: 700; }
+    .radar-readout .rd-label { display: block; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.06em; margin-top: 4px; }
+
+    .project-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; margin-bottom: 18px; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 22px; }
+    .tag { font-family: var(--mono); font-size: 0.68rem; color: var(--cyan); background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2); padding: 3px 10px; border-radius: 3px; transition: background 0.2s, border-color 0.2s, transform 0.2s; }
+    .tag:hover { background: rgba(6,182,212,0.2); border-color: var(--cyan); transform: translateY(-1px); }
+
+    .project-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .proj-btn {
+      font-family: var(--mono); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.03em;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      padding: 9px 16px; border-radius: 7px; transition: all 0.2s;
+    }
+    .proj-btn .btn-arrow { transition: transform 0.2s; }
+    .proj-btn:hover .btn-arrow { transform: translateX(3px); }
+    .proj-btn.demo { background: linear-gradient(135deg, var(--blue), var(--cyan)); color: #fff; }
+    .proj-btn.demo:hover { box-shadow: 0 6px 20px rgba(6,182,212,0.35); transform: translateY(-1px); }
+    .proj-btn.source { color: var(--muted); border: 1px solid var(--border); background: transparent; }
+    .proj-btn.source:hover { color: var(--text); border-color: var(--muted); }
+    .live-badge { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 0.62rem; color: #22C55E; border: 1px solid rgba(34,197,94,0.3); background: rgba(34,197,94,0.08); padding: 2px 8px; border-radius: 3px; }
     .live-dot { width: 5px; height: 5px; background: #22C55E; border-radius: 50%; animation: pulse 1.5s infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .radar-sweep { animation: none; }
+      .ats-bar-fill, .metric-fill { transition: none; }
+    }
+
 
     /* ── EXPERIENCE ── */
     #experience { background: var(--bg2); }
     .timeline { position: relative; max-width: 780px; }
     .timeline::before {
       content: ''; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 1px;
-      background: linear-gradient(180deg, var(--blue), var(--border) 90%);
+      background: var(--border);
+    }
+    .timeline-fill {
+      position: absolute; left: 9px; top: 8px; width: 1px; height: 0%;
+      background: linear-gradient(180deg, var(--cyan), var(--blue));
+      box-shadow: 0 0 8px rgba(6,182,212,0.6);
+      transition: height 0.1s linear; z-index: 1;
     }
     .timeline-item { position: relative; padding-left: 40px; margin-bottom: 40px; }
     .timeline-item:last-child { margin-bottom: 0; }
     .timeline-dot {
       position: absolute; left: 0; top: 4px; width: 19px; height: 19px; border-radius: 50%;
-      background: var(--bg2); border: 2px solid var(--blue);
-      display: flex; align-items: center; justify-content: center;
+      background: var(--bg2); border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center; z-index: 2;
+      transition: border-color 0.4s ease;
     }
-    .timeline-dot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); }
+    .timeline-dot::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--muted); transition: background 0.4s ease, box-shadow 0.4s ease; }
+    .timeline-dot.lit { border-color: var(--blue); }
+    .timeline-dot.lit::after { background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
     .timeline-card {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
       padding: 24px 28px; transition: border-color 0.2s, transform 0.2s;
@@ -478,6 +670,10 @@
     /* ── CONTACT ── */
     #contact { background: var(--bg); text-align: center; }
     .contact-inner { max-width: 600px; margin: 0 auto; }
+    .sys-ready { font-family: var(--mono); font-size: 0.82rem; color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 18px; min-height: 1.2em; }
+    .sys-ready-cursor { display: inline-block; width: 7px; height: 1em; background: var(--cyan); margin-left: 2px; vertical-align: -2px; animation: sysBlink 0.9s steps(1) infinite; }
+    .sys-ready.done .sys-ready-cursor { animation: sysBlink 1.1s steps(1) infinite; }
+    @keyframes sysBlink { 50% { opacity: 0; } }
     .contact-desc { color: var(--muted); font-size: 1rem; line-height: 1.85; margin-bottom: 40px; }
     .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 40px; }
     .contact-card {
@@ -630,7 +826,7 @@
       Passionate about <strong>Deep Learning, GenAI</strong>, and turning ideas into real products.
     </p>
     <div class="hero-btns">
-      <a href="#projects" class="btn-primary">View Projects →</a>
+      <a href="#projects" class="btn-primary">View Projects <span class="btn-arrow">→</span></a>
       <a href="#contact" class="btn-secondary">Get In Touch</a>
       <a href="Divyanshu_Resume.pdf" class="btn-download js-resume-preview">⬇ Resume</a>
     </div>
@@ -719,15 +915,15 @@
         <div class="stat-lbl">// Patna Research Intern</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val">61%</div>
+        <div class="stat-val" data-count-to="61" data-suffix="%">0%</div>
         <div class="stat-lbl">// CNN Model Accuracy</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val">3+</div>
+        <div class="stat-val" data-count-to="3" data-suffix="+">0+</div>
         <div class="stat-lbl">// Projects Shipped</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val">7+</div>
+        <div class="stat-val" data-count-to="7" data-suffix="+">0+</div>
         <div class="stat-lbl">// Certifications</div>
       </div>
     </div>
@@ -752,41 +948,74 @@
 
     <div class="project-card fade">
       <div class="project-num">PROJECT_01</div>
-      <div class="project-icon" aria-hidden="true">🤖</div>
       <h3 class="project-name">AI Resume Analyzer <span class="live-badge"><span class="live-dot"></span>LIVE</span></h3>
+
+      <div class="project-visual">
+        <div class="visual-head"><span class="vdot" style="background:#EF4444"></span><span class="vdot" style="background:#F59E0B"></span><span class="vdot" style="background:#22C55E"></span><span class="vlabel">resume_preview.pdf</span></div>
+        <div class="ats-row"><span class="ats-label">ATS SCORE</span><span class="ats-num" data-count-to="87" data-suffix="%">0%</span></div>
+        <div class="ats-bar"><div class="ats-bar-fill" data-fill-to="87"></div></div>
+      </div>
+
       <p class="project-desc">Full-stack AI web app that analyzes resumes using Google Gemini AI. Features ATS scoring, dark/light theme toggle, PDF/Word upload, animated progress, and downloadable reports. Deployed on Streamlit Cloud.</p>
       <div class="project-tags">
         <span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">Gemini AI</span><span class="tag">PyPDF2</span><span class="tag">ATS Scoring</span>
       </div>
       <div class="project-links">
-        <a href="https://github.com/divyanshu1213/ai-resume-analyzer" target="_blank" class="proj-link github">GitHub ↗</a>
-        <a href="https://resumeai-by-divyanshu.streamlit.app" target="_blank" class="proj-link live">Live Demo ↗</a>
+        <a href="https://resumeai-by-divyanshu.streamlit.app" target="_blank" class="proj-btn demo">TRY DEMO <span class="btn-arrow">↗</span></a>
+        <a href="https://github.com/divyanshu1213/ai-resume-analyzer" target="_blank" class="proj-btn source">SOURCE <span class="btn-arrow">↗</span></a>
       </div>
     </div>
 
     <div class="project-card fade">
       <div class="project-num">PROJECT_02</div>
-      <div class="project-icon" aria-hidden="true">🎯</div>
       <h3 class="project-name">Military Aircraft Detection</h3>
-      <p class="project-desc">Custom CNN built with TensorFlow to classify 6 military aircraft types on a real Kaggle image dataset (~1,570 images). Applied real-time data augmentation (rotation, flip, zoom, contrast) and evaluated with a confusion matrix, reaching 61.34% validation accuracy — benchmarked against a MobileNetV2 transfer learning baseline (58.8%) for model selection and error analysis.</p>
+
+      <div class="project-visual">
+        <div class="visual-head"><span class="vdot" style="background:#EF4444"></span><span class="vdot" style="background:#F59E0B"></span><span class="vdot" style="background:#22C55E"></span><span class="vlabel">validation_run.log</span></div>
+        <div class="metric-row">
+          <span class="metric-name">Custom CNN</span>
+          <div class="metric-bar"><div class="metric-fill fill-primary" data-fill-to="61.34"></div></div>
+          <span class="metric-num" data-count-to="61.34" data-suffix="%">0%</span>
+        </div>
+        <div class="metric-row">
+          <span class="metric-name">MobileNetV2</span>
+          <div class="metric-bar"><div class="metric-fill fill-secondary" data-fill-to="58.8"></div></div>
+          <span class="metric-num" data-count-to="58.8" data-suffix="%">0%</span>
+        </div>
+      </div>
+
+      <p class="project-desc">Custom CNN built with TensorFlow to classify 6 military aircraft types on a real Kaggle image dataset (~1,570 images). Applied real-time data augmentation and evaluated with a confusion matrix, reaching 61.34% validation accuracy — benchmarked against a MobileNetV2 transfer learning baseline (58.8%).</p>
       <div class="project-tags">
         <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">OpenCV</span><span class="tag">CNN</span><span class="tag">NumPy</span>
       </div>
       <div class="project-links">
-        <a href="https://github.com/divyanshu1213/military-aircraft-detection" target="_blank" class="proj-link github">GitHub ↗</a>
+        <a href="https://github.com/divyanshu1213/military-aircraft-detection" target="_blank" class="proj-btn source">SOURCE <span class="btn-arrow">↗</span></a>
       </div>
     </div>
 
     <div class="project-card fade">
       <div class="project-num">PROJECT_03</div>
-      <div class="project-icon" aria-hidden="true">🚗</div>
       <h3 class="project-name">Object-Avoiding Smart Car</h3>
+
+      <div class="project-visual">
+        <div class="visual-head"><span class="vdot" style="background:#EF4444"></span><span class="vdot" style="background:#F59E0B"></span><span class="vdot" style="background:#22C55E"></span><span class="vlabel">sensor_feed.log</span></div>
+        <div class="radar-wrap">
+          <div class="radar">
+            <div class="radar-ring"></div>
+            <div class="radar-ring r2"></div>
+            <div class="radar-sweep"></div>
+            <div class="radar-core"></div>
+          </div>
+          <div class="radar-readout"><span class="rd-num" id="radar-dist">-- cm</span><span class="rd-label">OBSTACLE DISTANCE</span></div>
+        </div>
+      </div>
+
       <p class="project-desc">Autonomous prototype vehicle using Raspberry Pi Pico and MicroPython. Integrates ultrasonic distance sensor and LDR light sensor for real-time environment-aware obstacle detection and motor control.</p>
       <div class="project-tags">
         <span class="tag">MicroPython</span><span class="tag">Raspberry Pi</span><span class="tag">Embedded</span><span class="tag">IoT</span><span class="tag">LDR</span>
       </div>
       <div class="project-links">
-        <a href="https://github.com/divyanshu1213/object-avoiding-car" target="_blank" class="proj-link github">GitHub ↗</a>
+        <a href="https://github.com/divyanshu1213/object-avoiding-car" target="_blank" class="proj-btn source">SOURCE <span class="btn-arrow">↗</span></a>
       </div>
     </div>
 
@@ -800,6 +1029,7 @@
     <h2 class="section-title">Work <span>Experience</span></h2>
   </div>
   <div class="timeline fade">
+    <div class="timeline-fill" id="timeline-fill"></div>
     <div class="timeline-item">
       <div class="timeline-dot"></div>
       <div class="timeline-card">
@@ -927,6 +1157,7 @@
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner fade">
+    <div class="sys-ready" id="sys-ready"><span id="sys-ready-text"></span><span class="sys-ready-cursor"></span></div>
     <p class="section-label">// 06 — contact</p>
     <h2 class="section-title">Let's Build <span>Together</span></h2>
     <p class="contact-desc">I'm actively looking for SDE and ML Engineer opportunities. Whether you have a role, a project, or just want to talk tech — my inbox is always open.</p>
@@ -971,6 +1202,29 @@
   </div>
 </div>
 
+<!-- ASK DIVYANSHU AI -->
+<button id="ai-fab" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="ai-panel">
+  <span class="ai-fab-spark" aria-hidden="true">✦</span> Ask Divyanshu AI
+</button>
+
+<div id="ai-panel" role="dialog" aria-modal="false" aria-label="Ask Divyanshu AI">
+  <div class="ai-panel-head">
+    <span class="ai-panel-title"><span class="dot" aria-hidden="true"></span>DIVYANSHU AI</span>
+    <span class="ai-panel-close" id="ai-panel-close" role="button" tabindex="0" aria-label="Close chat">✕</span>
+  </div>
+  <div class="ai-quick-row">
+    <button class="ai-quick-btn" data-q="projects">Projects</button>
+    <button class="ai-quick-btn" data-q="skills">Skills</button>
+    <button class="ai-quick-btn" data-q="experience">Experience</button>
+    <button class="ai-quick-btn" data-q="contact">Contact</button>
+  </div>
+  <div class="ai-body" id="ai-body"></div>
+  <div class="ai-input-row">
+    <input id="ai-input" type="text" placeholder="Ask a question..." autocomplete="off" maxlength="200" aria-label="Ask Divyanshu AI a question"/>
+    <button id="ai-send" type="button" aria-label="Send">→</button>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <span class="footer-logo">divyanshu.raj</span>
@@ -990,8 +1244,8 @@
 
     const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
     const fontSize = 14;
-    const columns = width / fontSize;
-    const drops = [];
+    let columns = Math.ceil(width / fontSize);
+    let drops = [];
     
     for (let i = 0; i < columns; i++) {
       drops[i] = Math.random() * -100;
@@ -1020,9 +1274,23 @@
     
     setInterval(drawMatrix, 33);
 
+    let resizeTimer;
     window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = heroSection.offsetHeight;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = heroSection.offsetHeight;
+        // recompute column count so new (wider) space keeps filling with rain
+        const newColumns = Math.ceil(width / fontSize);
+        if (newColumns > columns) {
+          for (let i = columns; i < newColumns; i++) {
+            drops[i] = Math.random() * -100;
+          }
+        } else {
+          drops.length = newColumns;
+        }
+        columns = newColumns;
+      }, 120);
     });
   }
 
@@ -1252,6 +1520,321 @@
       });
     }
   }
+
+  // ── ASK DIVYANSHU AI (deterministic local assistant, no external API) ──
+  (function () {
+    const fab = document.getElementById('ai-fab');
+    const panel = document.getElementById('ai-panel');
+    const closeBtn = document.getElementById('ai-panel-close');
+    const body = document.getElementById('ai-body');
+    const input = document.getElementById('ai-input');
+    const sendBtn = document.getElementById('ai-send');
+    const quickBtns = document.querySelectorAll('.ai-quick-btn');
+    if (!fab || !panel || !body || !input || !sendBtn) return;
+
+    let opened = false;
+
+    // ── knowledge base: ordered rules, first keyword match wins ──
+    const KB = [
+      {
+        k: ['resume analyzer', 'resume', 'ats', 'gemini'],
+        a: "The AI Resume Analyzer is a full-stack app that scores resumes using Google Gemini AI — ATS scoring, PDF/Word upload, animated progress, a dark/light toggle, and downloadable reports. It's deployed live on Streamlit Cloud. Check the 'Projects' section for the GitHub + live demo links."
+      },
+      {
+        k: ['aircraft', 'military', 'cnn', 'yolo classif'],
+        a: "Military Aircraft Detection is a custom CNN (TensorFlow) that classifies 6 military aircraft types on a ~1,570-image Kaggle dataset, using real-time augmentation (rotation, flip, zoom, contrast). It hit 61.34% validation accuracy, beating a MobileNetV2 transfer-learning baseline (58.8%)."
+      },
+      {
+        k: ['car', 'raspberry', 'iot', 'embedded', 'obstacle'],
+        a: "The Object-Avoiding Smart Car is an autonomous prototype built on a Raspberry Pi Pico + MicroPython, using an ultrasonic distance sensor and an LDR light sensor for real-time obstacle detection and motor control."
+      },
+      {
+        k: ['strongest project', 'best project', 'favorite project', 'favourite project', 'top project'],
+        a: "Probably the AI Resume Analyzer — it's the most 'product-like' of the three: a deployed, full-stack GenAI app people can actually use, not just a notebook. The Military Aircraft Detection CNN is the deepest ML work though, with real benchmarking against a baseline model."
+      },
+      {
+        k: ['project'],
+        a: "Divyanshu has shipped 3 featured projects:\n\n1. AI Resume Analyzer — Gemini-powered ATS scoring app (Python, Streamlit)\n2. Military Aircraft Detection — custom CNN, 61.34% accuracy (TensorFlow, OpenCV)\n3. Object-Avoiding Smart Car — autonomous embedded prototype (MicroPython, Raspberry Pi)\n\nScroll to the Projects section, or ask me about a specific one."
+      },
+      {
+        k: ['iit patna', 'iit', 'internship', 'research intern', 'fist-tbi'],
+        a: "Divyanshu was a Research Intern at FIST-TBI, IIT Patna (Jun–Jul 2024), working on YOLO-based object detection with a faculty researcher. He handled the full ML pipeline — dataset prep, training, hyperparameter tuning, and evaluation — inside a real academic R&D environment."
+      },
+      {
+        k: ['experience', 'work history', 'job'],
+        a: "His core experience is a Research Internship at IIT Patna (FIST-TBI, Jun–Jul 2024) doing YOLO object-detection R&D — full ML pipeline from dataset prep to evaluation. He's also shipped independent projects and is actively looking for SDE / ML Engineer roles now."
+      },
+      {
+        k: ['skill', 'technolog', 'stack', 'tech stack', 'language'],
+        a: "Languages: Python, Java, JavaScript, HTML/CSS, MySQL\nAI/ML: TensorFlow, OpenCV, YOLO, CNN, Generative AI\nTools: Git, Google Colab, Postman, Figma, VS Code, Streamlit\nCloud & Data: Azure, AWS, MongoDB, Neo4j, Tableau\n\nAsk me about any specific one, e.g. 'what does he use TensorFlow for?'"
+      },
+      {
+        k: ['certif', 'credential'],
+        a: "Certifications: Oracle Generative AI Professional, Neo4j Certified Professional, MongoDB Certified DBA, Java 11 Essentials (Infosys Springboard), Microsoft Fabric Analytics Engineer Associate (DP-600), Deloitte Data Analytics Job Simulation, and a Power BI micro-course. Full list + links in the Certifications section."
+      },
+      {
+        k: ['education', 'college', 'university', 'vit', 'degree', 'study'],
+        a: "Divyanshu is a Computer Science & Engineering graduate from VIT-AP University, with a strong foundation in Deep Learning, Python, and software development."
+      },
+      {
+        k: ['contact', 'email', 'reach', 'hire', 'linkedin', 'github profile'],
+        a: "You can reach Divyanshu at rajdivyanshu1213@gmail.com, or find him on LinkedIn and GitHub — all linked in the Contact section below. He's actively open to SDE and ML Engineer roles."
+      },
+      {
+        k: ['resume pdf', 'cv', 'download resume', 'view resume'],
+        a: "You can view or download his resume using the 'View Resume' button in the Contact section at the bottom of the page."
+      },
+      {
+        k: ['who are you', 'what are you', 'are you real', 'ai model', 'llm'],
+        a: "I'm a small deterministic assistant built into this portfolio — no external AI API, just pattern-matching over Divyanshu's real project/skills/experience data. Think of me as a searchable FAQ with a chat UI."
+      },
+      {
+        k: ['hi', 'hello', 'hey', 'yo', 'sup'],
+        a: "Hey! I'm Divyanshu's portfolio assistant. Ask me about his projects, skills, experience, or how to get in touch — or tap one of the quick buttons above."
+      },
+      {
+        k: ['thank', 'thanks'],
+        a: "You're welcome! Anything else you'd like to know about Divyanshu's work?"
+      }
+    ];
+
+    const FALLBACK = "I don't have a specific answer for that yet — try asking about his Projects, Skills, Experience at IIT Patna, Certifications, or how to Contact him.";
+
+    function findAnswer(q) {
+      const qq = q.toLowerCase();
+      for (const rule of KB) {
+        if (rule.k.some(kw => qq.includes(kw))) return rule.a;
+      }
+      return FALLBACK;
+    }
+
+    function scrollToBottom() { body.scrollTop = body.scrollHeight; }
+
+    function addUserMsg(text) {
+      const row = document.createElement('div');
+      row.className = 'ai-msg user';
+      row.innerHTML = `<div class="ai-bubble"></div>`;
+      row.querySelector('.ai-bubble').textContent = text;
+      body.appendChild(row);
+      scrollToBottom();
+    }
+
+    function addBotMsg(text) {
+      const row = document.createElement('div');
+      row.className = 'ai-msg bot';
+      const typing = document.createElement('div');
+      typing.className = 'ai-bubble';
+      typing.innerHTML = `<div class="ai-typing"><span></span><span></span><span></span></div>`;
+      row.appendChild(typing);
+      body.appendChild(row);
+      scrollToBottom();
+
+      const delay = 350 + Math.random() * 350;
+      setTimeout(() => {
+        typing.innerHTML = '';
+        typing.textContent = text;
+        scrollToBottom();
+      }, delay);
+    }
+
+    function ask(q) {
+      if (!q || !q.trim()) return;
+      addUserMsg(q.trim());
+      addBotMsg(findAnswer(q));
+    }
+
+    function openPanel() {
+      opened = true;
+      panel.classList.add('open');
+      fab.classList.add('hide');
+      fab.setAttribute('aria-expanded', 'true');
+      if (!body.childElementCount) {
+        addBotMsg("Hi, I'm Divyanshu AI ✦ Ask me anything about his projects, skills, experience, or how to get in touch.");
+      }
+      setTimeout(() => input.focus(), 200);
+    }
+
+    function closePanel() {
+      opened = false;
+      panel.classList.remove('open');
+      fab.classList.remove('hide');
+      fab.setAttribute('aria-expanded', 'false');
+      fab.focus();
+    }
+
+    fab.addEventListener('click', () => { opened ? closePanel() : openPanel(); });
+    closeBtn.addEventListener('click', closePanel);
+    closeBtn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closePanel(); } });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && opened) closePanel();
+    });
+    document.addEventListener('click', e => {
+      if (opened && !panel.contains(e.target) && !fab.contains(e.target)) closePanel();
+    });
+
+    quickBtns.forEach(btn => {
+      btn.addEventListener('click', () => ask(btn.textContent.trim()));
+    });
+
+    sendBtn.addEventListener('click', () => { ask(input.value); input.value = ''; });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { ask(input.value); input.value = ''; }
+    });
+  })();
+
+  // ── PROJECT CARDS: spotlight hover + animated demo metrics ──
+  (function () {
+    const cards = document.querySelectorAll('.project-card');
+    if (!cards.length) return;
+
+    // mouse-follow spotlight
+    cards.forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+      });
+    });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // count-up numbers + bar fills, triggered once when card scrolls into view
+    function animateCard(card) {
+      card.querySelectorAll('[data-fill-to]').forEach(el => {
+        const target = parseFloat(el.getAttribute('data-fill-to'));
+        el.style.width = reduceMotion ? target + '%' : '0%';
+        if (!reduceMotion) requestAnimationFrame(() => { el.style.width = target + '%'; });
+      });
+      card.querySelectorAll('[data-count-to]').forEach(el => {
+        const target = parseFloat(el.getAttribute('data-count-to'));
+        const suffix = el.getAttribute('data-suffix') || '';
+        const isDecimal = target % 1 !== 0;
+        if (reduceMotion) { el.textContent = target + suffix; return; }
+        const duration = 1300, start = performance.now();
+        function step(now) {
+          const p = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const val = target * eased;
+          el.textContent = (isDecimal ? val.toFixed(2) : Math.round(val)) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      });
+    }
+
+    // radar readout: fake live distance number, only ticks while its card is visible
+    const radarEl = document.getElementById('radar-dist');
+    let radarInterval = null;
+    function startRadar() {
+      if (radarInterval || !radarEl) return;
+      const tick = () => { radarEl.textContent = (8 + Math.round(Math.random() * 37)) + ' cm'; };
+      tick();
+      radarInterval = setInterval(tick, reduceMotion ? 3000 : 1400);
+    }
+    function stopRadar() { clearInterval(radarInterval); radarInterval = null; }
+
+    const seen = new WeakSet();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const card = entry.target;
+        if (entry.isIntersecting) {
+          if (!seen.has(card)) { seen.add(card); animateCard(card); }
+          if (card.querySelector('#radar-dist')) startRadar();
+        } else if (card.querySelector('#radar-dist')) {
+          stopRadar();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    cards.forEach(card => io.observe(card));
+  })();
+
+  // ── CINEMATIC SCROLL MOMENTS ──
+  (function () {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // 1) About stats: count up once when scrolled into view
+    const statEls = document.querySelectorAll('.stat-val[data-count-to]');
+    if (statEls.length) {
+      const statSeen = new WeakSet();
+      const statIo = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || statSeen.has(entry.target)) return;
+          statSeen.add(entry.target);
+          const el = entry.target;
+          const target = parseFloat(el.getAttribute('data-count-to'));
+          const suffix = el.getAttribute('data-suffix') || '';
+          if (reduceMotion) { el.textContent = target + suffix; return; }
+          const duration = 1100, start = performance.now();
+          function step(now) {
+            const p = Math.min(1, (now - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.5 });
+      statEls.forEach(el => statIo.observe(el));
+    }
+
+    // 2) Experience timeline: line illuminates progressively as section scrolls through view
+    const timeline = document.querySelector('.timeline');
+    const timelineFill = document.getElementById('timeline-fill');
+    if (timeline && timelineFill) {
+      const dots = timeline.querySelectorAll('.timeline-dot');
+      let ticking = false;
+      function updateTimeline() {
+        ticking = false;
+        const rect = timeline.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const total = rect.height + vh * 0.55;
+        const scrolled = vh * 0.85 - rect.top;
+        const progress = Math.max(0, Math.min(1, scrolled / total));
+        timelineFill.style.height = (progress * 100) + '%';
+        const fillPx = progress * rect.height;
+        dots.forEach(dot => {
+          const dotCenter = dot.offsetTop + dot.offsetHeight / 2;
+          dot.classList.toggle('lit', progress > 0 && fillPx >= dotCenter - 6);
+        });
+      }
+      function onScroll() {
+        if (!ticking) { ticking = true; requestAnimationFrame(updateTimeline); }
+      }
+      if (reduceMotion) {
+        timelineFill.style.transition = 'none';
+        timelineFill.style.height = '100%';
+        dots.forEach(dot => dot.classList.add('lit'));
+      } else {
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        updateTimeline();
+      }
+    }
+
+    // 3) Contact: terminal-style "SYSTEM READY." type-on reveal
+    const sysReady = document.getElementById('sys-ready');
+    const sysReadyText = document.getElementById('sys-ready-text');
+    if (sysReady && sysReadyText) {
+      const message = '> SYSTEM READY.';
+      let typed = false;
+      const sysIo = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting || typed) return;
+          typed = true;
+          if (reduceMotion) { sysReadyText.textContent = message; sysReady.classList.add('done'); return; }
+          let i = 0;
+          const typer = setInterval(() => {
+            i++;
+            sysReadyText.textContent = message.slice(0, i);
+            if (i >= message.length) { clearInterval(typer); sysReady.classList.add('done'); }
+          }, 45);
+        });
+      }, { threshold: 0.6 });
+      sysIo.observe(sysReady);
+    }
+  })();
 </script>
 
 </body>
