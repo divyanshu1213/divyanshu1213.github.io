@@ -143,11 +143,13 @@
       padding: 13px 20px; border-radius: 999px;
       background: var(--card); border: 1px solid var(--border);
       color: var(--text); font-family: var(--mono); font-size: 0.82rem; font-weight: 500;
-      cursor: pointer; letter-spacing: 0.02em;
+      cursor: grab; letter-spacing: 0.02em; touch-action: none; user-select: none;
       box-shadow: 0 4px 20px rgba(0,0,0,0.35);
       transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
+    #ai-fab.dragging { transition: none; cursor: grabbing; }
     #ai-fab:hover { border-color: var(--cyan); box-shadow: 0 8px 28px rgba(6,182,212,0.25); transform: translateY(-2px); }
+    #ai-fab.dragging:hover { transform: none; }
     #ai-fab .ai-fab-spark { color: var(--cyan); animation: pulse 2s infinite; }
     #ai-fab.hide { opacity: 0; pointer-events: none; transform: translateY(12px) scale(0.9); }
 
@@ -487,7 +489,14 @@
 
     /* ── ABOUT ── */
     #about { background: var(--bg2); }
-    .about-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; }
+    .about-grid { display: grid; grid-template-columns: 220px 1.1fr 1fr; gap: 48px; align-items: start; }
+    .about-photo-frame {
+      border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      background: var(--card); padding: 8px; transition: all 0.3s;
+    }
+    .about-photo-frame:hover { border-color: var(--blue); box-shadow: 0 12px 32px rgba(37,99,235,0.15); }
+    .about-photo-frame img { width: 100%; height: auto; display: block; border-radius: 9px; filter: grayscale(8%) contrast(1.03); }
+    .about-photo-tag { font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); text-align: center; margin-top: 12px; letter-spacing: 0.05em; }
     .about-text p { color: var(--muted); line-height: 1.9; margin-bottom: 20px; font-size: 0.97rem; }
     .about-text p strong { color: var(--text); font-weight: 600; }
     .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -652,18 +661,22 @@
 
     /* ── CERTIFICATIONS ── */
     #certifications { background: var(--bg2); }
-    .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+    .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
     .cert-card {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 22px 24px; display: flex; align-items: center; gap: 16px;
-      text-decoration: none; transition: all 0.3s; position: relative; overflow: hidden;
+      overflow: hidden; text-decoration: none; transition: all 0.3s; position: relative;
+      display: flex; flex-direction: column;
     }
-    .cert-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(37,99,235,0.03), transparent); opacity: 0; transition: opacity 0.3s; }
+    .cert-thumb { aspect-ratio: 16/10.5; overflow: hidden; background: #fff; border-bottom: 1px solid var(--border); }
+    .cert-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.4s; }
+    .cert-card:hover .cert-thumb img { transform: scale(1.04); }
+    .cert-body { padding: 18px 20px; display: flex; align-items: center; gap: 14px; }
+    .cert-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(37,99,235,0.03), transparent); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
     .cert-card:hover { border-color: var(--blue); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,99,235,0.12); }
     .cert-card:hover::before { opacity: 1; }
-    .cert-icon { font-size: 1.8rem; min-width: 44px; text-align: center; }
-    .cert-name { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-    .cert-org { font-size: 0.75rem; color: var(--muted); font-family: var(--mono); }
+    .cert-icon { font-size: 1.5rem; min-width: 36px; text-align: center; }
+    .cert-name { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .cert-org { font-size: 0.72rem; color: var(--muted); font-family: var(--mono); }
     .cert-arrow { margin-left: auto; color: var(--blue); font-size: 1rem; opacity: 0; transition: all 0.2s; }
     .cert-card:hover .cert-arrow { opacity: 1; transform: translateX(4px); }
 
@@ -745,6 +758,7 @@
       #hero { grid-template-columns: 1fr; padding-top: 100px; }
       .hero-right { margin-top: 8px; }
       .about-grid { grid-template-columns: 1fr; }
+      .about-photo { max-width: 200px; margin: 0 auto; }
       nav .nav-links { display: none; }
       nav .nav-resume { display: none; }
       .nav-toggle { display: flex; }
@@ -904,6 +918,12 @@
     <h2 class="section-title">About <span>Me</span></h2>
   </div>
   <div class="about-grid fade">
+    <div class="about-photo">
+      <div class="about-photo-frame">
+        <img src="assets/img/profile.jpeg" alt="Divyanshu Raj" loading="lazy">
+      </div>
+      <p class="about-photo-tag">// operator.jpg</p>
+    </div>
     <div class="about-text">
       <p>I'm a <strong>Computer Science & Engineering graduate from VIT-AP University</strong> with a strong foundation in Deep Learning, Python, and software development. Driven by curiosity to understand how intelligent systems work — and a desire to build things that actually matter.</p>
       <p>During my <strong>research internship at IIT Patna</strong>, I worked hands-on with YOLO-based object detection — handling everything from dataset preparation to model training and evaluation inside a real R&D environment at one of India's top institutions.</p>
@@ -923,7 +943,7 @@
         <div class="stat-lbl">// Projects Shipped</div>
       </div>
       <div class="stat-card">
-        <div class="stat-val" data-count-to="7" data-suffix="+">0+</div>
+        <div class="stat-val" data-count-to="8" data-suffix="+">0+</div>
         <div class="stat-lbl">// Certifications</div>
       </div>
     </div>
@@ -1096,61 +1116,92 @@
   </div>
   <div class="certs-grid fade">
     <a href="https://drive.google.com/file/d/1YbVTM10v21P3-vDu2q7Iu6QcPTnlcNBF/view?usp=drive_link" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">☁️</div>
-      <div>
-        <div class="cert-name">Oracle Generative AI Professional</div>
-        <div class="cert-org">Oracle</div>
+      <div class="cert-thumb"><img src="assets/certs/oracle_genai.png" alt="Oracle Generative AI Professional certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">☁️</div>
+        <div>
+          <div class="cert-name">Oracle Generative AI Professional</div>
+          <div class="cert-org">Oracle</div>
+        </div>
+        <div class="cert-arrow">↗</div>
       </div>
-      <div class="cert-arrow">↗</div>
     </a>
     <a href="https://graphacademy.neo4j.com/c/caad2308-104f-40d8-b896-b905ad7fd082/" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">🕸️</div>
-      <div>
-        <div class="cert-name">Neo4j Certified Professional</div>
-        <div class="cert-org">Neo4j</div>
+      <div class="cert-thumb"><img src="assets/certs/neo4j.png" alt="Neo4j Certified Professional certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">🕸️</div>
+        <div>
+          <div class="cert-name">Neo4j Certified Professional</div>
+          <div class="cert-org">Neo4j</div>
+        </div>
+        <div class="cert-arrow">↗</div>
       </div>
-      <div class="cert-arrow">↗</div>
     </a>
     <a href="https://drive.google.com/file/d/1ACuKiuBwUY2mL1qb8QhSNi_2fR0WXGP6/view?usp=drive_link" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">🍃</div>
-      <div>
-        <div class="cert-name">MongoDB Certified DBA</div>
-        <div class="cert-org">MongoDB</div>
+      <div class="cert-thumb"><img src="assets/certs/mongodb.png" alt="MongoDB Certified DBA certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">🍃</div>
+        <div>
+          <div class="cert-name">MongoDB Certified DBA</div>
+          <div class="cert-org">MongoDB</div>
+        </div>
+        <div class="cert-arrow">↗</div>
       </div>
-      <div class="cert-arrow">↗</div>
     </a>
     <a href="https://drive.google.com/file/d/11Lcj_Za9ZPgQertGhJ9AwNbGkGwZX_BU/view?usp=sharing" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">☕</div>
-      <div>
-        <div class="cert-name">Java 11 Essentials</div>
-        <div class="cert-org">Infosys Springboard</div>
+      <div class="cert-thumb"><img src="assets/certs/java11_infosys.png" alt="Java 11 Essentials certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">☕</div>
+        <div>
+          <div class="cert-name">Java 11 Essentials</div>
+          <div class="cert-org">Infosys Springboard</div>
+        </div>
+        <div class="cert-arrow">↗</div>
       </div>
-      <div class="cert-arrow">↗</div>
     </a>
     <a href="https://learn.microsoft.com/api/credentials/share/en-gb/DivyanshuRaj-7619/7FC1ED6F472F6C5E?sharingId=7C3BF7180C544ED1" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">🔷</div>
-      <div>
-        <div class="cert-name">Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</div>
-        <div class="cert-org">Microsoft</div>
+      <div class="cert-thumb"><img src="assets/certs/microsoft_dp600.png" alt="Microsoft Certified: Fabric Analytics Engineer Associate certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">🔷</div>
+        <div>
+          <div class="cert-name">Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)</div>
+          <div class="cert-org">Microsoft</div>
+        </div>
+        <div class="cert-arrow">↗</div>
       </div>
-      <div class="cert-arrow">↗</div>
     </a>
     <a href="https://drive.google.com/file/d/1SxZPtStzKBWV2kX7O3nGmEqDks-FcMWD/view?usp=drive_link" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">📊</div>
-      <div>
-        <div class="cert-name">Deloitte Data Analytics Job Simulation</div>
-        <div class="cert-org">Forage</div>
+      <div class="cert-thumb"><img src="assets/certs/deloitte_data_analyst.png" alt="Deloitte Data Analytics Job Simulation certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">📊</div>
+        <div>
+          <div class="cert-name">Deloitte Data Analytics Job Simulation</div>
+          <div class="cert-org">Forage</div>
+        </div>
+        <div class="cert-arrow">↗</div>
       </div>
-      <div class="cert-arrow">↗</div>
     </a>
     <a href="https://drive.google.com/file/d/1LV-VPYB_yCpA9rAk37UDklOWQFVFu_dJ/view?usp=sharing" target="_blank" class="cert-card">
-      <div class="cert-icon" aria-hidden="true">📈</div>
-      <div>
-        <div class="cert-name">30-Days Power BI Micro Course</div>
-        <div class="cert-org">CoursePe</div>
+      <div class="cert-thumb"><img src="assets/certs/powerbi.png" alt="30-Days Power BI Micro Course certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">📈</div>
+        <div>
+          <div class="cert-name">30-Days Power BI Micro Course</div>
+          <div class="cert-org">CoursePe</div>
+        </div>
+        <div class="cert-arrow">↗</div>
       </div>
-      <div class="cert-arrow">↗</div>
     </a>
+    <div class="cert-card" style="cursor:default;">
+      <div class="cert-thumb"><img src="assets/certs/iit_patna_intern.png" alt="IIT Patna FIST-TBI Internship certificate" loading="lazy"></div>
+      <div class="cert-body">
+        <div class="cert-icon" aria-hidden="true">🎓</div>
+        <div>
+          <div class="cert-name">Research Internship Certificate — FIST-TBI</div>
+          <div class="cert-org">IIT Patna</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1521,7 +1572,7 @@
     }
   }
 
-  // ── ASK DIVYANSHU AI (deterministic local assistant, no external API) ──
+  // ── ASK DIVYANSHU AI (Groq-backed via Cloudflare Worker, with local fallback) ──
   (function () {
     const fab = document.getElementById('ai-fab');
     const panel = document.getElementById('ai-panel');
@@ -1531,6 +1582,16 @@
     const sendBtn = document.getElementById('ai-send');
     const quickBtns = document.querySelectorAll('.ai-quick-btn');
     if (!fab || !panel || !body || !input || !sendBtn) return;
+
+    // Set this to your deployed Worker URL, e.g.
+    // 'https://ask-divyanshu.YOUR-SUBDOMAIN.workers.dev'
+    const WORKER_URL = 'https://ask-divyanshu.rajdivyanshu1213.workers.dev';
+
+    // Rolling conversation memory sent with every request so follow-ups like
+    // "how did you use it" resolve against the last topic. Capped client-side
+    // too, to keep payloads small.
+    const conversation = [];
+    const MAX_TURNS = 10;
 
     let opened = false;
 
@@ -1542,11 +1603,11 @@
       },
       {
         k: ['aircraft', 'military', 'cnn', 'yolo classif'],
-        a: "Military Aircraft Detection is a custom CNN (TensorFlow) that classifies 6 military aircraft types on a ~1,570-image Kaggle dataset, using real-time augmentation (rotation, flip, zoom, contrast). It hit 61.34% validation accuracy, beating a MobileNetV2 transfer-learning baseline (58.8%)."
+        a: "Military Aircraft Detection is a custom CNN (TensorFlow), trained from scratch on 1,569 real images across 6 aircraft types (An124, JF17, Ka52, SR71, T50, Tejas) from Kaggle, using real-time augmentation (rotation, flip, zoom, contrast). It hit 61.34% validation accuracy — actually beating a MobileNetV2 transfer-learning baseline, which topped out at 58.79%."
       },
       {
         k: ['car', 'raspberry', 'iot', 'embedded', 'obstacle'],
-        a: "The Object-Avoiding Smart Car is an autonomous prototype built on a Raspberry Pi Pico + MicroPython, using an ultrasonic distance sensor and an LDR light sensor for real-time obstacle detection and motor control."
+        a: "The Object-Avoiding Smart Car is an autonomous prototype on a Raspberry Pi Pico + MicroPython, using an HC-SR04 ultrasonic sensor and an LDR light sensor. If an obstacle is within 30cm and it's dark, it stops all motors as a safety response — it's a stop-on-detection behavior, not an active steer-around maneuver."
       },
       {
         k: ['strongest project', 'best project', 'favorite project', 'favourite project', 'top project'],
@@ -1558,11 +1619,11 @@
       },
       {
         k: ['iit patna', 'iit', 'internship', 'research intern', 'fist-tbi'],
-        a: "Divyanshu was a Research Intern at FIST-TBI, IIT Patna (Jun–Jul 2024), working on YOLO-based object detection with a faculty researcher. He handled the full ML pipeline — dataset prep, training, hyperparameter tuning, and evaluation — inside a real academic R&D environment."
+        a: "Divyanshu was a Research Intern at FIST-TBI, IIT Patna (Jun–Jul 2024), mentored by Dr. Maheshkumar H. Kolekar. He built a custom YOLOv8n object detector — personally sourcing and hand-annotating images with LabelImg, writing a pipeline to convert annotations into YOLO format, and training the model on his own dataset (car, person, truck, bike, cat, dog, flower; a pothole class was added later). He also benchmarked a pretrained YOLOv8n on COCO for comparison."
       },
       {
         k: ['experience', 'work history', 'job'],
-        a: "His core experience is a Research Internship at IIT Patna (FIST-TBI, Jun–Jul 2024) doing YOLO object-detection R&D — full ML pipeline from dataset prep to evaluation. He's also shipped independent projects and is actively looking for SDE / ML Engineer roles now."
+        a: "His core experience is a Research Internship at IIT Patna (FIST-TBI, Jun–Jul 2024), where he built and trained a custom YOLOv8n object detector on a self-collected, self-annotated dataset — full pipeline from data collection to evaluation. He's also shipped independent projects and is actively looking for SDE / ML Engineer roles now."
       },
       {
         k: ['skill', 'technolog', 'stack', 'tech stack', 'language'],
@@ -1586,7 +1647,7 @@
       },
       {
         k: ['who are you', 'what are you', 'are you real', 'ai model', 'llm'],
-        a: "I'm a small deterministic assistant built into this portfolio — no external AI API, just pattern-matching over Divyanshu's real project/skills/experience data. Think of me as a searchable FAQ with a chat UI."
+        a: "I'm Divyanshu AI — normally I run on an LLM (via Groq) grounded in Divyanshu's real project/skills/experience data, so I can handle follow-up questions naturally. You're currently seeing my offline fallback mode (keyword-based), which kicks in if the live AI backend is unreachable."
       },
       {
         k: ['hi', 'hello', 'hey', 'yo', 'sup'],
@@ -1619,7 +1680,10 @@
       scrollToBottom();
     }
 
-    function addBotMsg(text) {
+    // Renders a bot message. `resolver` is an async function that returns the
+    // reply text — lets us show the typing indicator while a real network
+    // request is in flight, instead of a fixed fake delay.
+    function addBotMsg(resolver) {
       const row = document.createElement('div');
       row.className = 'ai-msg bot';
       const typing = document.createElement('div');
@@ -1629,19 +1693,91 @@
       body.appendChild(row);
       scrollToBottom();
 
-      const delay = 350 + Math.random() * 350;
-      setTimeout(() => {
+      Promise.resolve(resolver()).then(text => {
         typing.innerHTML = '';
         typing.textContent = text;
         scrollToBottom();
-      }, delay);
+      });
+    }
+
+    async function fetchAIReply(q) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 12000);
+      try {
+        const res = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: q, history: conversation.slice(-MAX_TURNS * 2) }),
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
+        if (!res.ok) throw new Error('Worker responded with ' + res.status);
+        const data = await res.json();
+        if (!data.reply) throw new Error('No reply in response');
+
+        conversation.push({ role: 'user', content: q });
+        conversation.push({ role: 'assistant', content: data.reply });
+        return data.reply;
+      } catch (err) {
+        clearTimeout(timeout);
+        // Offline / error fallback: local keyword matcher still works, so the
+        // widget degrades gracefully instead of breaking outright.
+        return findAnswer(q) + '\n\n(offline fallback — live AI backend unreachable)';
+      }
     }
 
     function ask(q) {
       if (!q || !q.trim()) return;
-      addUserMsg(q.trim());
-      addBotMsg(findAnswer(q));
+      const trimmed = q.trim();
+      addUserMsg(trimmed);
+      addBotMsg(() => fetchAIReply(trimmed));
     }
+
+    // ── Draggable AI launcher button (session-only — resets to default spot on reload) ──
+    let fabDragging = false;
+    let fabWasDragged = false;
+    let fabOffsetX = 0, fabOffsetY = 0;
+
+    fab.addEventListener('pointerdown', (e) => {
+      if (opened || e.button !== undefined && e.button !== 0 && e.pointerType === 'mouse') return;
+      const rect = fab.getBoundingClientRect();
+      fabOffsetX = e.clientX - rect.left;
+      fabOffsetY = e.clientY - rect.top;
+      // Switch from bottom/left CSS anchoring to free top/left pixel positioning
+      fab.style.left = rect.left + 'px';
+      fab.style.top = rect.top + 'px';
+      fab.style.bottom = 'auto';
+      fab.style.right = 'auto';
+      fabDragging = false;
+      fab.setPointerCapture(e.pointerId);
+    });
+
+    fab.addEventListener('pointermove', (e) => {
+      if (!fab.hasPointerCapture(e.pointerId)) return;
+      if (!fabDragging) {
+        fabDragging = true;
+        fab.classList.add('dragging');
+      }
+      const maxLeft = window.innerWidth - fab.offsetWidth - 8;
+      const maxTop = window.innerHeight - fab.offsetHeight - 8;
+      const newLeft = Math.min(Math.max(8, e.clientX - fabOffsetX), maxLeft);
+      const newTop = Math.min(Math.max(8, e.clientY - fabOffsetY), maxTop);
+      fab.style.left = newLeft + 'px';
+      fab.style.top = newTop + 'px';
+    });
+
+    function endFabDrag(e) {
+      if (fab.hasPointerCapture && fab.hasPointerCapture(e.pointerId)) {
+        fab.releasePointerCapture(e.pointerId);
+      }
+      if (fabDragging) {
+        fabWasDragged = true; // tells the click handler to skip opening the panel
+        fab.classList.remove('dragging');
+      }
+      fabDragging = false;
+    }
+    fab.addEventListener('pointerup', endFabDrag);
+    fab.addEventListener('pointercancel', endFabDrag);
 
     function openPanel() {
       opened = true;
@@ -1649,7 +1785,7 @@
       fab.classList.add('hide');
       fab.setAttribute('aria-expanded', 'true');
       if (!body.childElementCount) {
-        addBotMsg("Hi, I'm Divyanshu AI ✦ Ask me anything about his projects, skills, experience, or how to get in touch.");
+        addBotMsg(() => "Hi, I'm Divyanshu AI ✦ Ask me anything about his projects, skills, experience, or how to get in touch.");
       }
       setTimeout(() => input.focus(), 200);
     }
@@ -1662,7 +1798,7 @@
       fab.focus();
     }
 
-    fab.addEventListener('click', () => { opened ? closePanel() : openPanel(); });
+    fab.addEventListener('click', () => { if (fabWasDragged) { fabWasDragged = false; return; } opened ? closePanel() : openPanel(); });
     closeBtn.addEventListener('click', closePanel);
     closeBtn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closePanel(); } });
 
