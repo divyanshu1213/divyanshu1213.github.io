@@ -568,7 +568,23 @@
     .metric-fill.fill-secondary { background: #64748B; }
     .metric-row .metric-num { font-family: var(--mono); font-size: 0.7rem; color: var(--text); text-align: right; }
 
-    /* car radar mock */
+    /* resume analyzer live scan readout */
+    .scan-readout { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-family: var(--mono); font-size: 0.76rem; color: var(--cyan); }
+    .scan-readout .scan-cursor { display: inline-block; width: 7px; height: 13px; background: var(--cyan); animation: blink 1s step-end infinite; }
+
+
+    .detect-wrap { display: flex; align-items: center; gap: 16px; margin-top: 14px; }
+    .detect-box { position: relative; width: 52px; height: 40px; border-radius: 3px; background: rgba(6,182,212,0.04); flex-shrink: 0; }
+    .db-corner { position: absolute; width: 10px; height: 10px; border: 2px solid var(--cyan); opacity: 0.85; animation: pulse 2.4s ease-in-out infinite; }
+    .db-corner.tl { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+    .db-corner.tr { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+    .db-corner.bl { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+    .db-corner.br { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+    .detect-readout { font-family: var(--mono); font-size: 0.78rem; display: flex; flex-direction: column; gap: 3px; }
+    .detect-readout .dt-label { color: var(--text); font-weight: 600; letter-spacing: 0.02em; }
+    .detect-readout .dt-conf { color: var(--cyan); font-size: 0.72rem; }
+
+
     .radar-wrap { display: flex; align-items: center; gap: 18px; }
     .radar { position: relative; width: 64px; height: 64px; flex-shrink: 0; }
     .radar-ring { position: absolute; inset: 0; border: 1px solid rgba(6,182,212,0.35); border-radius: 50%; }
@@ -605,6 +621,8 @@
     .live-dot { width: 5px; height: 5px; background: #22C55E; border-radius: 50%; animation: pulse 1.5s infinite; }
     @media (prefers-reduced-motion: reduce) {
       .radar-sweep { animation: none; }
+      .db-corner { animation: none; }
+      .scan-cursor { animation: none; }
       .ats-bar-fill, .metric-fill { transition: none; }
     }
 
@@ -974,6 +992,7 @@
         <div class="visual-head"><span class="vdot" style="background:#EF4444"></span><span class="vdot" style="background:#F59E0B"></span><span class="vdot" style="background:#22C55E"></span><span class="vlabel">resume_preview.pdf</span></div>
         <div class="ats-row"><span class="ats-label">ATS SCORE</span><span class="ats-num" data-count-to="87" data-suffix="%">0%</span></div>
         <div class="ats-bar"><div class="ats-bar-fill" data-fill-to="87"></div></div>
+        <div class="scan-readout"><span id="scan-status">Parsing resume...</span><span class="scan-cursor"></span></div>
       </div>
 
       <p class="project-desc">Full-stack AI web app that analyzes resumes using Google Gemini AI. Features ATS scoring, dark/light theme toggle, PDF/Word upload, animated progress, and downloadable reports. Deployed on Streamlit Cloud.</p>
@@ -1002,9 +1021,13 @@
           <div class="metric-bar"><div class="metric-fill fill-secondary" data-fill-to="58.8"></div></div>
           <span class="metric-num" data-count-to="58.8" data-suffix="%">0%</span>
         </div>
-      </div>
-
-      <p class="project-desc">Custom CNN built with TensorFlow to classify 6 military aircraft types on a real Kaggle image dataset (~1,570 images). Applied real-time data augmentation and evaluated with a confusion matrix, reaching 61.34% validation accuracy — benchmarked against a MobileNetV2 transfer learning baseline (58.8%).</p>
+        <div class="detect-wrap">
+          <div class="detect-box">
+            <span class="db-corner tl"></span><span class="db-corner tr"></span><span class="db-corner bl"></span><span class="db-corner br"></span>
+          </div>
+          <div class="detect-readout"><span class="dt-label" id="detect-label">SCANNING…</span><span class="dt-conf" id="detect-conf">--</span></div>
+        </div>
+      </div> on a real Kaggle image dataset (~1,570 images). Applied real-time data augmentation and evaluated with a confusion matrix, reaching 61.34% validation accuracy — benchmarked against a MobileNetV2 transfer learning baseline (58.8%).</p>
       <div class="project-tags">
         <span class="tag">Python</span><span class="tag">TensorFlow</span><span class="tag">OpenCV</span><span class="tag">CNN</span><span class="tag">NumPy</span>
       </div>
@@ -1861,14 +1884,58 @@
 
     // radar readout: fake live distance number, only ticks while its card is visible
     const radarEl = document.getElementById('radar-dist');
-    let radarInterval = null;
+    let radarInterval = null, radarTimeout = null;
     function startRadar() {
-      if (radarInterval || !radarEl) return;
+      if (radarInterval || radarTimeout || !radarEl) return;
       const tick = () => { radarEl.textContent = (8 + Math.round(Math.random() * 37)) + ' cm'; };
-      tick();
-      radarInterval = setInterval(tick, reduceMotion ? 3000 : 1400);
+      const period = reduceMotion ? 3000 : (1200 + Math.random() * 500);
+      radarTimeout = setTimeout(() => {
+        tick();
+        radarInterval = setInterval(tick, period);
+      }, Math.random() * 1200);
     }
-    function stopRadar() { clearInterval(radarInterval); radarInterval = null; }
+    function stopRadar() { clearTimeout(radarTimeout); clearInterval(radarInterval); radarTimeout = null; radarInterval = null; }
+
+    // aircraft detection readout: cycles through the real 6 classes with a fake confidence score
+    const AIRCRAFT_CLASSES = ['An124', 'JF17', 'Ka52', 'SR71', 'T50', 'Tejas'];
+    const detectLabelEl = document.getElementById('detect-label');
+    const detectConfEl = document.getElementById('detect-conf');
+    let detectInterval = null, detectTimeout = null;
+    function startDetect() {
+      if (detectInterval || detectTimeout || !detectLabelEl) return;
+      const tick = () => {
+        const cls = AIRCRAFT_CLASSES[Math.floor(Math.random() * AIRCRAFT_CLASSES.length)];
+        const conf = (88 + Math.random() * 11).toFixed(1);
+        detectLabelEl.textContent = 'DETECTED: ' + cls;
+        detectConfEl.textContent = conf + '%';
+      };
+      const period = reduceMotion ? 3000 : (1400 + Math.random() * 500);
+      detectTimeout = setTimeout(() => {
+        tick();
+        detectInterval = setInterval(tick, period);
+      }, Math.random() * 1200);
+    }
+    function stopDetect() { clearTimeout(detectTimeout); clearInterval(detectInterval); detectTimeout = null; detectInterval = null; }
+
+    // resume analyzer readout: cycles through fake scan-status lines
+    const SCAN_LINES = ['Parsing resume...', 'Checking ATS keywords...', 'Scoring achievements...', 'Analyzing formatting...', 'Generating report...'];
+    const scanStatusEl = document.getElementById('scan-status');
+    let scanInterval = null, scanTimeout = null;
+    let scanIdx = 0;
+    function startScan() {
+      if (scanInterval || scanTimeout || !scanStatusEl) return;
+      scanIdx = 0;
+      const tick = () => {
+        scanStatusEl.textContent = SCAN_LINES[scanIdx % SCAN_LINES.length];
+        scanIdx++;
+      };
+      const period = reduceMotion ? 3000 : (1400 + Math.random() * 500);
+      scanTimeout = setTimeout(() => {
+        tick();
+        scanInterval = setInterval(tick, period);
+      }, Math.random() * 1200);
+    }
+    function stopScan() { clearTimeout(scanTimeout); clearInterval(scanInterval); scanTimeout = null; scanInterval = null; }
 
     const seen = new WeakSet();
     const io = new IntersectionObserver(entries => {
@@ -1877,8 +1944,12 @@
         if (entry.isIntersecting) {
           if (!seen.has(card)) { seen.add(card); animateCard(card); }
           if (card.querySelector('#radar-dist')) startRadar();
-        } else if (card.querySelector('#radar-dist')) {
-          stopRadar();
+          if (card.querySelector('#detect-label')) startDetect();
+          if (card.querySelector('#scan-status')) startScan();
+        } else {
+          if (card.querySelector('#radar-dist')) stopRadar();
+          if (card.querySelector('#detect-label')) stopDetect();
+          if (card.querySelector('#scan-status')) stopScan();
         }
       });
     }, { threshold: 0.35 });
